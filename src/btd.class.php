@@ -5,6 +5,8 @@
  * author Anderson Arruda < contato@sysborg.com.br >
  */
 namespace sysborg;
+use \GdImage;
+use sysborg\BTDException;
 
 class btd{
     private array $allowedExtensions = [
@@ -27,6 +29,8 @@ class btd{
 
     private string $mime;
 
+    private GdImage|null $gd;
+
     /**
      * description      Construct class and prepares the image edition
      * @author          Anderson Arruda < contato@sysborg.com.br >
@@ -36,13 +40,18 @@ class btd{
      */
     public function construct(private string $filepath)
     {
-        if(!file_exists($this->filepath))
+        if(!file_exists($this->filepath)){
             throw new \Exception('File path can\'t be reach, path: '. $this->filepath);
+        }
 
         $this->mime = mime_content_type($this->filepath);
         if(!array_key_exists($this->mime, $this->allowedExtensions)){
             throw new \Exception('File mime type are not allowed. Mime type: '. $this->mime. ', allowed: '. implode(', ', array_keys($this->allowedExtensions)));
         }
+
+        $type = $this->allowedExtensions[$this->mime];
+        $this->gd = $type($filepath);
+
     }
 }
 ?>
