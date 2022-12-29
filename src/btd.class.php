@@ -38,9 +38,7 @@ class btd{
      */
     public function __construct(private string $filepath)
     {
-        if(!is_file($this->filepath)){
-            throw new \Exception('File path can\'t be reach, path: '. $this->filepath);
-        }
+        !is_file($filepath) && throw new BTDException(0);
 
         $this->mime = mime_content_type($this->filepath);
         if(!array_key_exists($this->mime, $this->allowedExtensions)){

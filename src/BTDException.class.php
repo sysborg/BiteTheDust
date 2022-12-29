@@ -32,6 +32,6 @@ class BTDException extends Exception{
      */
     public function __toString(): string
     {
-        return '['. $this->getCode(). ']:'. $this->getMessage(). ' in file '. $this->getFile(). ', line: '. $this->getLine();
+        return '['. $this->getCode(). ']:'. $this->getMessage();
     }
 }
