@@ -38,7 +38,7 @@ class btd{
      */
     public function __construct(private string $filepath)
     {
-        if(!file_exists($this->filepath)){
+        if(!is_file($this->filepath)){
             throw new \Exception('File path can\'t be reach, path: '. $this->filepath);
         }
 
