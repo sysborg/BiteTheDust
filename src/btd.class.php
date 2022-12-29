@@ -5,8 +5,6 @@
  * author Anderson Arruda < contato@sysborg.com.br >
  */
 namespace sysborg;
-use \GdImage;
-use sysborg\BTDException;
 
 class btd{
     private array $allowedExtensions = [
@@ -19,17 +17,17 @@ class btd{
     ];
 
     private array $resources = [
-        'bmp'  => imagecreatefrombmp,
-        'gif'  => imagecreatefromgif, 
-        'jpeg' => imagecreatefromjpeg,
-        'png'  => imagecreatefrompng,
-        'tga'  => imagecreatefromtga,
-        'webp' => imagecreatefromwebp
+        'bmp'  => 'imagecreatefrombmp',
+        'gif'  => 'imagecreatefromgif', 
+        'jpeg' => 'imagecreatefromjpeg',
+        'png'  => 'imagecreatefrompng',
+        'tga'  => 'imagecreatefromtga',
+        'webp' => 'imagecreatefromwebp'
     ];
 
     private string $mime;
 
-    private GdImage|null $gd;
+    private \GdImage|null $gd;
 
     /**
      * description      Construct class and prepares the image edition
