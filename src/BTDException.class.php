@@ -7,6 +7,9 @@ class BTDException extends Exception{
     const BTD_ERRORS = [
         0 => 'Can\'t reach file',
         1 => 'File mime type are not allowed',
+        2 => 'Can\'t open file using GdImage, check if file aren\'t corrupted',
+        3 => 'Cannot convert to the input type',
+        4 => 'Directory has no write permission',
         9999 => 'Unknow Error'
     ];
 
