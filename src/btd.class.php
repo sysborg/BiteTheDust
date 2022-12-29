@@ -41,9 +41,7 @@ class btd{
         !is_file($filepath) && throw new BTDException(0);
 
         $this->mime = mime_content_type($this->filepath);
-        if(!array_key_exists($this->mime, $this->allowedExtensions)){
-            throw new \Exception('File mime type are not allowed. Mime type: '. $this->mime. ', allowed: '. implode(', ', array_keys($this->allowedExtensions)));
-        }
+        !array_key_exists($this->mime, $this->allowedExtensions) && throw new BTDException(1);
 
         $type = $this->allowedExtensions[$this->mime];
         $this->gd = $type($filepath);
