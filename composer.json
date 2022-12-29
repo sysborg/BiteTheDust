@@ -1,0 +1,40 @@
+{
+    "name": "sysborg/BiteTheDust",
+    "type": "library",
+    "description": "Easy and quickly gd library integration and image library. Soon more tools available.",
+    "keywords": [
+        "GDLibrary",
+        "php",
+        "image convert",
+        "jpg",
+        "jpeg",
+        "gif",
+        "webp",
+        "png",
+        "bmp",
+        "proportional scale image"
+    ],
+    "authors": [
+      {
+        "name": "Sysborg",
+        "email": "contato@sysborg.com.br",
+        "role": "Company"
+      },
+      {
+          "name": "Anderson Matheus Arruda",
+          "email": "andmarruda@gmail.com",
+          "role": "developer"
+      }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "ext-gd": "*"
+    },
+    "autoload":  {
+        "files": [
+            "/src/autoloader.php"
+        ]
+    },
+    "homepage": "https://github.com/sysborg/BiteTheDust",
+    "license": "MIT"
+}
