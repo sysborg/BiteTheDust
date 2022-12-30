@@ -37,7 +37,7 @@ class btd{
     /**
      * this sizes are rellated to width
      */
-    const srcset = [
+    const SRCSET = [
         320, 768, 1024,
         1280, 1366, 1440,
         1600, 1680, 1920
@@ -68,6 +68,21 @@ class btd{
     }
 
     /**
+     * description      Filter sizes smaller than the image width
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @version         1.0.0
+     * @param           
+     * @return          array
+     */
+    private function srcsetFiltered() : array
+    {
+        $imgWidth = $this->getWidth();
+        return array_filter(self::SRCSET, function($val) use($imgWidth){
+            return $val < $imgWidth;
+        });
+    }
+
+    /**
      * description      Get image size
      * @author          Anderson Arruda < contato@sysborg.com.br >
      * @version         1.0.0
@@ -82,11 +97,15 @@ class btd{
     /**
      * description      Resize srcset
      * @author          Anderson Arruda < contato@sysborg.com.br >
-     * @param           
+     * @param           string $filename
      * @return          btd
      */
-    public function resizeSrcSet() : btd
+    public function resizeSrcSet(string $filename) : btd
     {
+        $srcsetSizes = $this->srcsetFiltered();
+        foreach($srcsetSizes as $size){
+            
+        }
         return $this;
     }
 
