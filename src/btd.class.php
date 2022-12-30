@@ -101,23 +101,45 @@ class btd{
      * @param           int $width
      * @return          string
      */
-    public function srcSetName(string $file, int $width) : string
+    public function srcSetName(string $path, int $width) : string
     {
+        $file = rtrim($path, DIRECTORY_SEPARATOR). DIRECTORY_SEPARATOR. utils::getFileName($this->filepath);
         return utils::addPrefixFile($file, (string) $width);
+    }
+
+    /**
+     * description      Return array with all existing images and his sizes into srcset by name
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @param           string $path
+     * @return          array
+     */
+    public function getSrcSetFiles(string $path) : array
+    {
+        $srcsetSizes = $this->srcsetFiltered();
+        $ret = [];
+        foreach($srcsetSizes as $size){
+            $srcsetpath = $this->srcSetName($path, $size);
+            if(is_file($srcsetpath))
+                $ret[] = ['width' => $size, 'filepath' => $srcsetpath];
+        }
+
+        return $ret;
     }
 
     /**
      * description      Resize srcset
      * @author          Anderson Arruda < contato@sysborg.com.br >
-     * @param           string $filename
+     * @param           string $path
+     * @param           string $type
+     * @param           int $quality
      * @return          btd
      */
-    public function resizeSrcSet(string $file, string $type, int $quality=100) : btd
+    public function resizeSrcSet(string $path, string $type, int $quality=100) : btd
     {
         $srcsetSizes = $this->srcsetFiltered();
         foreach($srcsetSizes as $size){
             (new btd($this->filepath))->proportional($size)
-                                      ->save($this->srcSetName($file, $size), $type, $quality);
+                                      ->save($this->srcSetName($path, $size), $type, $quality);
 
         }
         return $this;

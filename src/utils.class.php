@@ -39,6 +39,18 @@
     }
 
     /**
+     * description      Get the filename of a path
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @param           $file
+     * @return          string
+     */
+    public static function getFileName(string $file) : string
+    {
+        preg_match('/[^\/]+$/', $file, $filename);
+        return $filename[0];
+    }
+
+    /**
      * description      Adds prefix into filename in a complete file path
      * @author          Anderson Arruda < contato@sysborg.com.br >
      * @param           string $file
@@ -47,8 +59,8 @@
      */
     public static function addPrefixFile(string $file, string $prefix) : string
     {
-        preg_match('/[^\/]+$/', $file, $filename);
-        return str_replace($filename[0], $prefix.$filename[0], $file);
+        $filename = self::getFileName($file);
+        return str_replace($filename, $prefix.$filename, $file);
     }
  }
  ?>
