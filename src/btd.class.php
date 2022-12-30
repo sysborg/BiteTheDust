@@ -34,6 +34,15 @@ class btd{
         'webp' => 'imagewebp'
     ];
 
+    /**
+     * this sizes are rellated to width
+     */
+    const srcset = [
+        320, 768, 1024,
+        1280, 1366, 1440,
+        1600, 1680, 1920
+    ];
+
     private string $mime;
 
     private \GdImage|null $gd;
@@ -56,6 +65,29 @@ class btd{
         $this->gd = $this->resources[$type]($filepath);
 
         is_null($this->gd) && throw new BTDException(2);
+    }
+
+    /**
+     * description      Get image size
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @version         1.0.0
+     * @param           
+     * @return          int
+     */
+    public function getWidth() : int
+    {
+        return imagesx($this->gd);
+    }
+
+    /**
+     * description      Resize srcset
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @param           
+     * @return          btd
+     */
+    public function resizeSrcSet() : btd
+    {
+        return $this;
     }
 
     /**
