@@ -5,4 +5,6 @@
 
     require_once __DIR__ . '/../src/autoloader.php';
     $btd = new \sysborg\btd(__DIR__. '/1669982787114.jpg');
+    //converts to png and save at the current directory
+    $btd->save(__DIR__. '/1669982787114.png', 'png');
 ?>

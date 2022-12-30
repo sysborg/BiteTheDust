@@ -5,4 +5,8 @@
 
     require_once __DIR__ . '/../src/autoloader.php';
     $btd = new \sysborg\btd(__DIR__. '/1669982787114.jpg');
+
+    /** proportional scale test width */
+    $btd->proportional(250)
+    ->save(__DIR__.'/testeWidth.webp', 'webp');
 ?>

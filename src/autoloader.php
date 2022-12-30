@@ -4,7 +4,8 @@
     final class autoloader{
         private static array $loadPath = [
             'sysborg\BTDException'  => '/BTDException.class.php',
-            'sysborg\btd'           => '/btd.class.php'
+            'sysborg\btd'           => '/btd.class.php',
+            'sysborg\utils'         => '/utils.class.php'
         ];
 
         /**
