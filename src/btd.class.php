@@ -13,7 +13,7 @@ class btd{
         'image/jpeg'  => 'jpeg',
         'image/png'   => 'png',
         'image/x-tga' => 'tga',
-        'image/web'   => 'webp'
+        'image/webp'   => 'webp'
     ];
 
     private array $resources = [
