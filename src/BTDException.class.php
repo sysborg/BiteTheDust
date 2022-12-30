@@ -10,6 +10,7 @@ class BTDException extends Exception{
         2 => 'Can\'t open file using GdImage, check if file aren\'t corrupted',
         3 => 'Cannot convert to the input type',
         4 => 'Directory has no write permission',
+        5 => 'File already exists, use replace parameter to overwrite it.',
         9999 => 'Unknow Error'
     ];
 

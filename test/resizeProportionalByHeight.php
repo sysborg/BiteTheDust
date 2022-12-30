@@ -4,9 +4,9 @@
     error_reporting(E_ALL);
 
     require_once __DIR__ . '/../src/autoloader.php';
-    $a = new \sysborg\btd(__DIR__. '/1669982787114.jpg');
+    $btd = new \sysborg\btd(__DIR__. '/1669982787114.jpg');
 
     /** proportional scale test height */
-    $a->proportional(height: 150)
+    $btd->proportional(height: 150)
       ->save(__DIR__.'/testeHeight.webp', 'webp');
 ?>
