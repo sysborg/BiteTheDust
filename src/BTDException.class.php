@@ -12,6 +12,7 @@ class BTDException extends Exception{
         4 => 'Directory has no write permission',
         5 => 'File already exists, use replace parameter to overwrite it.',
         6 => 'Failed to crop the image.',
+        7 => 'Can\'t get filesize',
         9999 => 'Unknow Error'
     ];
 

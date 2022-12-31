@@ -94,6 +94,32 @@ class btd{
     }
 
     /**
+     * description      Get filesize
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @version         1.0.0
+     * @param           
+     * @return          int
+     */
+    public function getImageSize() : int
+    {
+        $size = filesize($this->filepath);
+        !$size && throw new BTDException(7);
+        return $size;
+    }
+
+    /**
+     * description      Check max filesize
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @version         1.0.0
+     * @param           int $maxsize
+     * @return          bool
+     */
+    public function checkMaxFileSize(int $maxsize) : bool
+    {
+        return $this->getImageSize() <= $maxsize;
+    }
+
+    /**
      * description      Crop image
      * @author          Anderson Arruda < contato@sysborg.com.br >
      * @version         1.0.0
