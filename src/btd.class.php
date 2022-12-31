@@ -81,6 +81,24 @@ class btd{
     }
 
     /**
+     * description      Crop image
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @version         1.0.0
+     * @param           int $left
+     * @param           int $top
+     * @param           int $width
+     * @param           int $height
+     * @return          btd
+     */
+    public function crop(int $left, int $top, int $width, int $height) : btd
+    {
+        $cropped = imagecrop($this->gd, ['x' => $left, 'y' => $top, 'width' => $width, 'height' => $height]);
+        !$cropped && throw new BTDException(6);
+        $this->gd = $cropped;
+        return $this;
+    }
+
+    /**
      * description      Filter sizes smaller than the image width
      * @author          Anderson Arruda < contato@sysborg.com.br >
      * @version         1.0.0
