@@ -68,8 +68,16 @@ class btd{
     }
 
     /**
-     * description      Verify if 
+     * description      Verify if file extension is allowed
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @version         1.0.0
+     * @param           string $extension
+     * @return          bool
      */
+    public static function isExtensionAllowed(string $extension) : bool
+    {
+        return in_array($extension, array_values(self::ALLOWED_EXTENSION));
+    }
 
     /**
      * description      Makes the image at grayscale
