@@ -13,7 +13,8 @@ class btd{
         'image/jpeg'  => 'jpeg',
         'image/png'   => 'png',
         'image/x-tga' => 'tga',
-        'image/webp'   => 'webp'
+        'image/webp'  => 'webp',
+        'image/jpg'   => 'jpg'
     ];
 
     private array $resources = [
@@ -76,7 +77,7 @@ class btd{
      */
     public static function isExtensionAllowed(string $extension) : bool
     {
-        return in_array($extension, array_values(self::ALLOWED_EXTENSION));
+        return in_array(strtolower($extension), array_values(self::ALLOWED_EXTENSION));
     }
 
     /**
