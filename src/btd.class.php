@@ -7,7 +7,7 @@
 namespace sysborg;
 
 class btd{
-    private array $allowedExtensions = [
+    const ALLOWED_EXTENSION = [
         'image/bmp'   => 'bmp',
         'image/gif'   => 'gif',
         'image/jpeg'  => 'jpeg',
@@ -59,13 +59,17 @@ class btd{
         !is_file($filepath) && throw new BTDException(0);
 
         $this->mime = mime_content_type($this->filepath);
-        !array_key_exists($this->mime, $this->allowedExtensions) && throw new BTDException(1);
+        !array_key_exists($this->mime, self::ALLOWED_EXTENSION) && throw new BTDException(1);
 
-        $type = $this->allowedExtensions[$this->mime];
+        $type = self::ALLOWED_EXTENSION[$this->mime];
         $this->gd = $this->resources[$type]($filepath);
 
         is_null($this->gd) && throw new BTDException(2);
     }
+
+    /**
+     * description      Verify if 
+     */
 
     /**
      * description      Makes the image at grayscale
