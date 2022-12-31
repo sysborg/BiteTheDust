@@ -174,6 +174,23 @@ class btd{
     }
 
     /**
+     * description      Remove all srcset of loaded image
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @param           
+     * @return          btd
+     */
+    public function deleteSrcSet() : btd
+    {
+        $allFiles = $this->getSrcSetFiles();
+        foreach($allFiles as $file){
+            !is_writable(dirname($file['filepath'])) && throw new BTDException(4);
+            unlink($file['filepath']);
+        }
+
+        return $this;
+    }
+
+    /**
      * description      Proportional resize
      * @author          Anderson Arruda < contato@sysborg.com.br >
      * @version         1.0.0
