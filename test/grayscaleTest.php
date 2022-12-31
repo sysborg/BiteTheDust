@@ -5,5 +5,5 @@
 
     require_once __DIR__ . '/../src/autoloader.php';
     $btd = new \sysborg\btd(__DIR__. '/1669982787114.jpg');
-    $btd->grayscale()->save(__DIR__. 'grayscale.jpg', 'jpg');
+    $btd->grayscale()->save(__DIR__. '/grayscale.jpg', 'jpg');
 ?>
