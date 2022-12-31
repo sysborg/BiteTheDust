@@ -5,5 +5,5 @@
 
     require_once __DIR__ . '/../src/autoloader.php';
     $btd = new \sysborg\btd(__DIR__. '/largeExample.webp');
-    $btd->crop(100, 120, 300, 250)->save(__DIR__. 'cropped.jpg', 'jpg');
+    $btd->crop(100, 120, 300, 250)->save(__DIR__. '/cropped.jpg', 'jpg');
 ?>
