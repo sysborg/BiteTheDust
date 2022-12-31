@@ -7,13 +7,14 @@
 namespace sysborg;
 
 class btd{
-    private array $allowedExtensions = [
+    const ALLOWED_EXTENSION = [
         'image/bmp'   => 'bmp',
         'image/gif'   => 'gif',
         'image/jpeg'  => 'jpeg',
         'image/png'   => 'png',
         'image/x-tga' => 'tga',
-        'image/webp'   => 'webp'
+        'image/webp'  => 'webp',
+        'image/jpg'   => 'jpg'
     ];
 
     private array $resources = [
@@ -59,12 +60,81 @@ class btd{
         !is_file($filepath) && throw new BTDException(0);
 
         $this->mime = mime_content_type($this->filepath);
-        !array_key_exists($this->mime, $this->allowedExtensions) && throw new BTDException(1);
+        !array_key_exists($this->mime, self::ALLOWED_EXTENSION) && throw new BTDException(1);
 
-        $type = $this->allowedExtensions[$this->mime];
+        $type = self::ALLOWED_EXTENSION[$this->mime];
         $this->gd = $this->resources[$type]($filepath);
 
         is_null($this->gd) && throw new BTDException(2);
+    }
+
+    /**
+     * description      Verify if file extension is allowed
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @version         1.0.0
+     * @param           string $extension
+     * @return          bool
+     */
+    public static function isExtensionAllowed(string $extension) : bool
+    {
+        return in_array(strtolower($extension), array_values(self::ALLOWED_EXTENSION));
+    }
+
+    /**
+     * description      Makes the image at grayscale
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @version         1.0.0
+     * @param           
+     * @return          btd
+     */
+    public function grayscale() : btd
+    {
+        imagefilter($this->gd, IMG_FILTER_GRAYSCALE);
+        return $this;
+    }
+
+    /**
+     * description      Get filesize
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @version         1.0.0
+     * @param           
+     * @return          int
+     */
+    public function getImageSize() : int
+    {
+        $size = filesize($this->filepath);
+        !$size && throw new BTDException(7);
+        return $size;
+    }
+
+    /**
+     * description      Check max filesize
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @version         1.0.0
+     * @param           int $maxsize
+     * @return          bool
+     */
+    public function checkMaxFileSize(int $maxsize) : bool
+    {
+        return $this->getImageSize() <= $maxsize;
+    }
+
+    /**
+     * description      Crop image
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @version         1.0.0
+     * @param           int $left
+     * @param           int $top
+     * @param           int $width
+     * @param           int $height
+     * @return          btd
+     */
+    public function crop(int $left, int $top, int $width, int $height) : btd
+    {
+        $cropped = imagecrop($this->gd, ['x' => $left, 'y' => $top, 'width' => $width, 'height' => $height]);
+        !$cropped && throw new BTDException(6);
+        $this->gd = $cropped;
+        return $this;
     }
 
     /**
@@ -97,28 +167,26 @@ class btd{
     /**
      * description      Prefix for files into srcset
      * @author          Anderson Arruda < contato@sysborg.com.br >
-     * @param           string $file
      * @param           int $width
      * @return          string
      */
-    public function srcSetName(string $path, int $width) : string
+    public function srcSetName(int $width) : string
     {
-        $file = rtrim($path, DIRECTORY_SEPARATOR). DIRECTORY_SEPARATOR. utils::getFileName($this->filepath);
-        return utils::addPrefixFile($file, (string) $width);
+        return utils::addPrefixFile($this->filepath, (string) $width);
     }
 
     /**
      * description      Return array with all existing images and his sizes into srcset by name
      * @author          Anderson Arruda < contato@sysborg.com.br >
-     * @param           string $path
+     * @param           
      * @return          array
      */
-    public function getSrcSetFiles(string $path) : array
+    public function getSrcSetFiles() : array
     {
         $srcsetSizes = $this->srcsetFiltered();
         $ret = [];
         foreach($srcsetSizes as $size){
-            $srcsetpath = $this->srcSetName($path, $size);
+            $srcsetpath = $this->srcSetName($size);
             if(is_file($srcsetpath))
                 $ret[] = ['width' => $size, 'filepath' => $srcsetpath];
         }
@@ -129,19 +197,35 @@ class btd{
     /**
      * description      Resize srcset
      * @author          Anderson Arruda < contato@sysborg.com.br >
-     * @param           string $path
      * @param           string $type
      * @param           int $quality
      * @return          btd
      */
-    public function resizeSrcSet(string $path, string $type, int $quality=100) : btd
+    public function resizeSrcSet(string $type, int $quality=100) : btd
     {
         $srcsetSizes = $this->srcsetFiltered();
         foreach($srcsetSizes as $size){
             (new btd($this->filepath))->proportional($size)
-                                      ->save($this->srcSetName($path, $size), $type, $quality);
+                                      ->save($this->srcSetName($size), $type, $quality);
 
         }
+        return $this;
+    }
+
+    /**
+     * description      Remove all srcset of loaded image
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @param           
+     * @return          btd
+     */
+    public function deleteSrcSet() : btd
+    {
+        $allFiles = $this->getSrcSetFiles();
+        foreach($allFiles as $file){
+            !is_writable(dirname($file['filepath'])) && throw new BTDException(4);
+            unlink($file['filepath']);
+        }
+
         return $this;
     }
 
