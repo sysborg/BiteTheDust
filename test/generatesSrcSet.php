@@ -5,5 +5,5 @@
 
     require_once __DIR__ . '/../src/autoloader.php';
     $btd = new \sysborg\btd(__DIR__. '/largeExample.webp');
-    $btd->resizeSrcSet(__DIR__. '/srcset', 'webp');
+    $btd->resizeSrcSet('webp');
 ?>

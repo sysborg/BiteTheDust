@@ -128,28 +128,26 @@ class btd{
     /**
      * description      Prefix for files into srcset
      * @author          Anderson Arruda < contato@sysborg.com.br >
-     * @param           string $file
      * @param           int $width
      * @return          string
      */
-    public function srcSetName(string $path, int $width) : string
+    public function srcSetName(int $width) : string
     {
-        $file = rtrim($path, DIRECTORY_SEPARATOR). DIRECTORY_SEPARATOR. utils::getFileName($this->filepath);
-        return utils::addPrefixFile($file, (string) $width);
+        return utils::addPrefixFile($this->filepath, (string) $width);
     }
 
     /**
      * description      Return array with all existing images and his sizes into srcset by name
      * @author          Anderson Arruda < contato@sysborg.com.br >
-     * @param           string $path
+     * @param           
      * @return          array
      */
-    public function getSrcSetFiles(string $path) : array
+    public function getSrcSetFiles() : array
     {
         $srcsetSizes = $this->srcsetFiltered();
         $ret = [];
         foreach($srcsetSizes as $size){
-            $srcsetpath = $this->srcSetName($path, $size);
+            $srcsetpath = $this->srcSetName($size);
             if(is_file($srcsetpath))
                 $ret[] = ['width' => $size, 'filepath' => $srcsetpath];
         }
@@ -160,17 +158,16 @@ class btd{
     /**
      * description      Resize srcset
      * @author          Anderson Arruda < contato@sysborg.com.br >
-     * @param           string $path
      * @param           string $type
      * @param           int $quality
      * @return          btd
      */
-    public function resizeSrcSet(string $path, string $type, int $quality=100) : btd
+    public function resizeSrcSet(string $type, int $quality=100) : btd
     {
         $srcsetSizes = $this->srcsetFiltered();
         foreach($srcsetSizes as $size){
             (new btd($this->filepath))->proportional($size)
-                                      ->save($this->srcSetName($path, $size), $type, $quality);
+                                      ->save($this->srcSetName($size), $type, $quality);
 
         }
         return $this;

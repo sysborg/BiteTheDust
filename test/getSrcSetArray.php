@@ -6,5 +6,5 @@
     require_once __DIR__ . '/../src/autoloader.php';
     $btd = new \sysborg\btd(__DIR__. '/largeExample.webp');
     //returns array with all srcset available
-    var_dump($btd->getSrcSetFiles(__DIR__. '/srcset'));
+    var_dump($btd->getSrcSetFiles());
 ?>
