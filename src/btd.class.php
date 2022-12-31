@@ -68,6 +68,19 @@ class btd{
     }
 
     /**
+     * description      Makes the image at grayscale
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @version         1.0.0
+     * @param           
+     * @return          btd
+     */
+    public function grayscale() : btd
+    {
+        imagefilter($this->gd, IMG_FILTER_GRAYSCALE);
+        return $this;
+    }
+
+    /**
      * description      Filter sizes smaller than the image width
      * @author          Anderson Arruda < contato@sysborg.com.br >
      * @version         1.0.0
