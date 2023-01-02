@@ -17,13 +17,14 @@
          * @param                   string $className
          * @return                  string
          */
-        public static function getClassPath(string $className) : string
+        public static function getClassPath(string $className) : ?string
         {
-            return self::$loadPath[$className];
+            return array_key_exists($className, self::$loadPath) ? self::$loadPath[$className] : null;
         }
     }
 
     spl_autoload_register(function($cls){
-        require_once __DIR__. \sysborg\autoloader::getClassPath($cls);
+        $file = __DIR__. \sysborg\autoloader::getClassPath($cls);
+        is_file($file) && require_once $file;
     });
 ?>
