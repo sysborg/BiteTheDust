@@ -81,6 +81,30 @@ class btd{
     }
 
     /**
+     * description      Returns all allowed extensions
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @version         1.0.0
+     * @param           
+     * @return          array
+     */
+    public static function getAllowedExtensions() : array
+    {
+        return array_values(self::ALLOWED_EXTENSION);
+    }
+
+    /**
+     * description      Get the implode of all allowed extensions
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @version         1.0.0
+     * @param           string $separator
+     * @return          string
+     */
+    public static function implodeAllowedExtensions(string $separator) : string
+    {
+        return implode($separator, self::getAllowedExtensions());
+    }
+
+    /**
      * description      Makes the image at grayscale
      * @author          Anderson Arruda < contato@sysborg.com.br >
      * @version         1.0.0
