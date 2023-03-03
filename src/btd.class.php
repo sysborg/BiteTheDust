@@ -47,6 +47,8 @@ class btd{
     private string $mime;
 
     private \GdImage|null $gd;
+    private string $file;
+    private string $extension;
 
     /**
      * description      Construct class and prepares the image edition
@@ -66,6 +68,8 @@ class btd{
         $this->gd = $this->resources[$type]($filepath);
 
         is_null($this->gd) && throw new BTDException(2);
+        $this->file = basename($this->filepath);
+        $this->extension = pathinfo($this->filepath, PATHINFO_EXTENSION);
     }
 
     /**
@@ -270,18 +274,33 @@ class btd{
     /**
      * description      Save file into disk
      * @author          Anderson Arruda < contato@sysborg.com.br >
-     * @param           string $file
+     * @param           ?string $file
      * @param           string $type
+     * @param           int $quality
+     * @param           bool $replace
      * @return          btd
      */
-    public function save(string $file, string $type, int $quality=100, bool $replace=false) : btd
+    public function save(?string $file, string $type, int $quality=100, bool $replace=false) : btd
     {
         $type = strtolower($type);
+        $file = $file ?? preg_replace('/\.[0-9a-zA-Z]+$/', '.'. $type, $this->filepath);
         !array_key_exists($type, $this->outputTypes) && throw new BTDException(3);
         is_file($file) && !$replace && throw new BTDException(5);
         !is_writable(dirname($file)) && throw new BTDException(4);
 
         $this->outputTypes[$type]($this->gd, $file, $quality);
+        return $this;
+    }
+
+    /**
+     * Delete file at his original path
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @param           
+     * @return          btd
+     */
+    public function delete() : btd
+    {
+        unlink($this->filepath);
         return $this;
     }
 }
