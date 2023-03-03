@@ -49,6 +49,7 @@ class btd{
     private \GdImage|null $gd;
     private string $file;
     private string $extension;
+    private string $latestSaved;
 
     /**
      * description      Construct class and prepares the image edition
@@ -289,7 +290,19 @@ class btd{
         !is_writable(dirname($file)) && throw new BTDException(4);
 
         $this->outputTypes[$type]($this->gd, $file, $quality);
+        $this->latestSaved = $file;
         return $this;
+    }
+
+    /**
+     * Get latest filepath or filename
+     * @author          Anderson Arruda < contato@sysborg.com.br >
+     * @param           bool $fullpath=TRUE
+     * @return          string
+     */
+    public function getLatestSaved(bool $fullpath=true) : string
+    {
+        return $fullpath ? $this->latestSaved : basename($this->latestSaved);
     }
 
     /**
