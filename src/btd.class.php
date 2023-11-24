@@ -55,10 +55,27 @@ class btd{
      * description      Construct class and prepares the image edition
      * @author          Anderson Arruda < contato@sysborg.com.br >
      * @version         1.0.0
-     * @param           private string $filepath
+     * @param           private ?string $filepath
      * @return          void
      */
-    public function __construct(private string $filepath)
+    public function __construct(private ?string $filepath=NULL)
+    {
+        if(!is_null($filepath))
+            $this->load($filepath);
+    }
+
+    /**
+     * description      Load image from disk and prepare to edit
+     *                 if the file is not an image, throws an exception
+     *                if the file is not allowed, throws an exception
+     *              if the file is not readable, throws an exception
+     *           if the file is not writable, throws an exception
+     *        if the file is not found, throws an exception
+     *    if the file is not an image, throws an exception
+     * @param           string $filepath
+     * @return          btd
+     */
+    public function load(string $filepath) : btd
     {
         !is_file($filepath) && throw new BTDException(0);
 
