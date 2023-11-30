@@ -78,6 +78,7 @@ class btd{
     public function load(string $filepath) : btd
     {
         !is_file($filepath) && throw new BTDException(0);
+        $this->filepath = $filepath;
 
         $this->mime = mime_content_type($this->filepath);
         !array_key_exists($this->mime, self::ALLOWED_EXTENSION) && throw new BTDException(1);
