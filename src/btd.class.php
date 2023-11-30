@@ -88,6 +88,8 @@ class btd{
         is_null($this->gd) && throw new BTDException(2);
         $this->file = basename($this->filepath);
         $this->extension = pathinfo($this->filepath, PATHINFO_EXTENSION);
+
+        return $this;
     }
 
     /**
